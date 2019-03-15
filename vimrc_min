@@ -1,0 +1,18 @@
+" Vimrc file, 
+" adopted from http://phuzz.org
+" modified by Vivek Sardeshmukh
+" evolved over years and years during my grad school
+
+set nocompatible    " use vim defaults
+
+" Vundle and YCM 
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+  Plugin 'VundleVim/Vundle.vim'
+  Plugin 'Valloric/YouCompleteMe'
+  "Plugin 'rdnetto/YCM-Generator'
+call vundle#end()
+filetype plugin indent on
+autocmd BufNewFile,BufRead *.C set filetype=cpp
+
