@@ -17,20 +17,30 @@ call vundle#begin()
   Plugin 'git://github.com/tpope/vim-unimpaired'
   Plugin 'git://github.com/tibabit/vim-templates'
   Plugin 'git://github.com/Konfekt/FastFold'
-  Plugin 'git://github.com/tmhedberg/SimpylFold'
+  "Plugin 'git://github.com/tmhedberg/SimpylFold'
   Plugin 'git://github.com/vim-scripts/genutils.git'
-  Plugin 'git://github.com/vim-scripts/perforce.git'
+  "Plugin 'git://github.com/vim-scripts/perforce.git'
   Plugin 'git://github.com/vim-scripts/scratch.git'
+  "Plugin 'git://github.com/zxqfl/tabnine-vim'
+  "Plugin 'git://github.com/bling/vim-bufferline'
+  Plugin 'git://github.com/MarcWeber/vim-addon-mw-utils'
+  Plugin 'git://github.com/tomtom/tlib_vim'
+  "Plugin 'git://github.com/garbas/vim-snipmate'
+  Plugin 'git://github.com/altercation/vim-colors-solarized.git'
+  "Plugin 'git://github.com/vim-airline/vim-airline'
+  "Plugin 'git://github.com/vim-airline/vim-airline-themes'
 call vundle#end()
 filetype plugin indent on
+" Clearcase files
 augroup filetypedetect
    au BufNewFile,BufRead *@@/*
     \ if expand("<afile>") =~ '@@' |
     \ exe "doau filetypedetect BufRead " . expand("<afile>:s?@@.*$??") |
     \ endif
- augroup END
-
+augroup END
 autocmd BufNewFile,BufRead *@@/* set filetype=cpp
+" Perforce files
+autocmd BufNewFile,BufRead *@* set filetype=cpp
 autocmd BufNewFile,BufRead *.C set filetype=cpp
 
 " Vivek's preferences
@@ -50,7 +60,7 @@ set nobackup        " do not keep a backup file
 set number          " show line numbers
 set ignorecase      " ignore case when searching
 "set noignorecase   " don't ignore case
-"set title           " show title in console title bar
+set title           " show title in console title bar
 set ttyfast         " smoother changes
 "set ttyscroll=0        " turn off scrolling, didn't work well with PuTTY
 set modeline        " last lines in document sets vim mode
@@ -59,7 +69,7 @@ set shortmess=atI   " Abbreviate messages
 set nostartofline   " don't jump to first character when paging
 set whichwrap=b,s,h,l,<,>,[,]   " move freely between files
 "set viminfo='20,<50,s10,h
-set tags=./tags,tags,/vobs/ua/MHV/Compiler/tags
+set tags=./tags,tags
 set nocst           "disable cstags 
 "set autoindent     " always set autoindenting on
 "set smartindent        " smart indent
@@ -77,6 +87,18 @@ set sm             " show matching braces, somewhat annoying...
 
 syntax on           " syntax highlighing
 
+" ------------------------------------------------------------------
+" Solarized Colorscheme Config
+" ------------------------------------------------------------------
+let g:solarized_contrast="high"    "default value is normal
+let g:solarized_visibility="high"    "default value is normal
+syntax enable
+set background=light
+colorscheme solarized
+" ------------------------------------------------------------------
+set t_Co=256
+"let g:airline_powerline_fonts = 1
+
 filetype plugin on  " vim-latex plugin settings below 
 let g:tex_flavor='pdflatex'
 let g:Tex_DefaultTargetFormat='pdf'
@@ -86,18 +108,19 @@ let g:Tex_FoldedEnvironments='tikzpicture, column, verbatim,comment,eq,gather,al
 let g:Tex_MultipleCompileFormats='pdf, aux'
 "disable vim-latex shortcuts
 let g:Imap_FreezeImap=1
-if has("gui_running")
-    " See ~/.gvimrc
-    set guifont=Monospace\ 10  " use this font
-    set lines=50       " height = 50 lines
-    set columns=100        " width = 100 columns
-    set background=light   " adapt colors for background
-    set selectmode=mouse,key,cmd
-    set keymodel=
+
+"if has("gui_running")
+"    " See ~/.gvimrc
+"    set guifont=Monospace\ 10  " use this font
+"    set lines=50       " height = 50 lines
+"    set columns=100        " width = 100 columns
+"    set background=light   " adapt colors for background
+"    set selectmode=mouse,key,cmd
+"    set keymodel=
 "else
 "   colorscheme biogoo    " use this color scheme
- "   set background=dark        " adapt colors for background
-endif
+"    set background=dark        " adapt colors for background
+"endif
 
 if has("autocmd")
     " Restore cursor position
@@ -208,7 +231,7 @@ map <F9> :YcmCompleter FixIt<CR>
 "let g:ycm_filetype_whitelist = { '*': 1 }
 "let g:ycm_key_invoke_completion = '<C-Space>'
 "let g:ycm_use_clangd = "Always"
-let g:ycm_clangd_binary_path = "/grid/common/test/llvm-v7.0.1rh65/bin/clangd"
+"let g:ycm_clangd_binary_path = "/grid/common/test/llvm-v7.0.1rh65/bin/clangd"
 "let g:ycm_max_diagnostics_to_display = 0
 "let g:ycm_always_populate_location_list = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -217,8 +240,8 @@ set clipboard=unnamedplus
 set nowrap
 
 "prevent closing last window 
-cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()<=2 ? 'close' : 'q')<CR>
-cabbrev wq <c-r>=(getcmdtype()==':' && getcmdpos()<=2 ? 'write' : 'wq')<CR>
+"cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()<=2 ? 'close' : 'q')<CR>
+"cabbrev wq <c-r>=(getcmdtype()==':' && getcmdpos()<=2 ? 'write' : 'wq')<CR>
 
 "Perforce
 let p4UseVimDiff2 = 1
@@ -236,3 +259,8 @@ nmap zuz <Plug>(FastFoldUpdate)
 let g:fastfold_savehook = 1
 let g:fastfold_fold_command_suffixes = ['x', 'X', 'a', 'A', 'o', 'O', 'c', 'C']
 let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+
+"Cursor line
+:hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+:hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+:nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
