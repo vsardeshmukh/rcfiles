@@ -11,7 +11,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
   Plugin 'git://github.com/VundleVim/Vundle.vim'
   Plugin 'git://github.com/Valloric/YouCompleteMe'
-  Plugin 'git://github.com/scrooloose/nerdtree'
+  "Plugin 'git://github.com/scrooloose/nerdtree'
   Plugin 'git://github.com/majutsushi/tagbar'
   Plugin 'git://github.com/vsardeshmukh/ctags.vim'
   Plugin 'git://github.com/tpope/vim-unimpaired'
@@ -85,7 +85,7 @@ set nospell
 set sm             " show matching braces, somewhat annoying...
 "set nowrap         " don't wrap lines
 
-syntax on           " syntax highlighing
+"syntax on           " syntax highlighing
 
 " ------------------------------------------------------------------
 " Solarized Colorscheme Config
