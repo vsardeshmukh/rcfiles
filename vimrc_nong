@@ -1,0 +1,334 @@
+" Vimrc file, 
+  " adopted from http://phuzz.org
+  " modified by Vivek Sardeshmukh
+  " evolved over years and years during my grad school
+
+  set nocompatible    " use vim defaults
+
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  " Vundle 
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  filetype off
+  set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+  Plugin 'VundleVim/Vundle.vim'
+  Plugin 'vim-airline/vim-airline'
+  Plugin 'vim-airline/vim-airline-themes'
+  Plugin 'edkolev/promptline.vim'
+  " Plugin 'edkolev/tmuxline.vim'
+  Plugin 'tpope/vim-unimpaired'
+  Plugin 'Konfekt/FastFold'
+  Plugin 'altercation/vim-colors-solarized.git'
+  Plugin 'vim-scripts/genutils.git'
+  Plugin 'MarcWeber/vim-addon-mw-utils'
+  Plugin 'tomtom/tlib_vim'
+  Plugin 'vim-scripts/scratch.git'
+  Plugin 'ervandew/supertab'
+  Plugin 'majutsushi/tagbar'
+  Plugin 'dag/vim-fish'
+  Plugin 'mhinz/vim-signify'
+  Plugin 'prabirshrestha/async.vim'
+  Plugin 'prabirshrestha/vim-lsp'
+  Plugin 'prabirshrestha/asyncomplete.vim'
+  Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+  Plugin 'SirVer/ultisnips'
+  Plugin 'honza/vim-snippets'
+  Plugin 'thomasfaingnaert/vim-lsp-snippets'
+  Plugin 'thomasfaingnaert/vim-lsp-ultisnips'
+  "Plugin 'vim-scripts/Java-Syntax-and-Folding'
+  "Plugin 'git://github.com/Valloric/YouCompleteMe'
+  "Plugin 'git://github.com/scrooloose/nerdtree'
+  "Plugin 'git://github.com/vsardeshmukh/ctags.vim'
+  "Plugin 'git://github.com/tibabit/vim-templates'
+  "Plugin 'git://github.com/tmhedberg/SimpylFold'
+  "Plugin 'git://github.com/vim-scripts/perforce.git'
+  "Plugin 'git://github.com/zxqfl/tabnine-vim'
+  "Plugin 'git://github.com/bling/vim-bufferline'
+  "Plugin 'git://github.com/garbas/vim-snipmate'
+call vundle#end()
+
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  " airline
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  let g:airline_powerline_fonts = 1
+  let g:airline_theme = 'bubblegum'
+  let g:airline_skip_empty_sections=1
+  let g:airline#extensions#tabline#enabled=1 "show buffers on top
+  let g:airline#extensions#tabline#buffer_nr_show = 1 " show buffer number
+  let g:airline_solarized_bg = 'dark'
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  " fish setup
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  " \'z' : [ '$(fish --command="get_citc_switch")' ],
+  let g:promptline_theme = 'airline_insert'
+  let g:promptline_preset = {
+    \'a' : [ '$(fish --command="hostname -s")' ],
+    \'b' : [ '$(fish --command="get_java_type")' ],
+    \'c' : [ '$(bash ~/.config/g3_prompt)' ],
+    \'x' : [ '$(fish --command="get_cached_cl")' ],
+    \'y' : [ '$(fish --command="get_citc_client")' ],
+    \'z' : [ '$(fish --command="date +%H:%M")' ],
+    \'warn' : [ promptline#slices#last_exit_code() ],
+    \'options': {
+      \'left_sections' : [ 'a', 'y', 'c', 'b' ],
+      \'right_sections' : [ 'warn',  'x', 'z' ],
+      \'left_only_sections' : [ 'a', 'b', 'z', 'y', 'x', 'c' ]}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vivek's preferences
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set backspace=indent,eol,start      " make backspace sane  
+set hidden                          " allow opening new buffers even if current buffer has unsaved changes
+set scrolloff=3                     " keep 3 lines when scrolling
+set ttyfast lazyredraw              " smoother changes
+set visualbell t_vb=                " turn off error beep/flash
+set novisualbell                    " turn off visual bell
+set nobackup                        " do not keep a backup file
+"set backup                         " keep a backup file
+set clipboard=unnamedplus           " use x clipboard
+set formatoptions=cqn1j             " See :help fo-table.
+set number                          " show line numbers
+set hlsearch                        " highlight searches
+set incsearch                       " do incremental searching
+set ignorecase                      " ignore case when searching
+set showcmd                         " Show the last command.
+set showmatch                       " show matching braces, somewhat annoying...
+set smartcase                       " Be smart about when case sensitivity matters.
+set smarttab                        " Only respect shiftwidth for code indents.
+set undofile                        " Saves undo history across sessions.
+set viewoptions=cursor,folds        " Save cursor position and folds.
+set wildmenu                        " Enhanced completion.
+set wildmode=list:longest           " Act like shell completion.
+
+set ls=2                            " allways show status line 
+set tabstop=2                       " numbers of spaces of tab character
+set shiftwidth=2                    " numbers of spaces to (auto)indent
+set expandtab
+set softtabstop=2
+set ruler                           " show the cursor position all the time
+"set title                           " show title in console title bar
+set modeline                        " last lines in document sets vim mode
+set modelines=3                     " number lines checked for modelines
+set shortmess=atI                   " Abbreviate messages
+set nostartofline                   " don't jump to first character when paging
+set whichwrap=b,s,h,l,<,>,[,]       " move freely between files
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"set tags=./tags,tags
+"set nocst                          "disable cstags 
+"set autoindent                     " always set autoindenting on
+"set smartindent                    " smart indent
+"set cindent                        " cindent
+"set noautoindent
+"set nosmartindent
+"set nocindent  
+"spell check
+"set nospell
+"set autowrite      " auto saves changes when quitting and swiching buffer
+"set expandtab      " tabs are converted to spaces, use only when required
+"set nowrap         " don't wrap lines
+"syntax on           " syntax highlighing
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" ------------------------------------------------------------------
+" Solarized Colorscheme Config
+" ------------------------------------------------------------------
+let g:solarized_contrast="high"    "default value is normal
+let g:solarized_visibility="high"    "default value is normal
+syntax enable
+"to toggle background use [ob ]ob (requires vim-unimpaired) 
+set background=dark
+colorscheme solarized
+set t_Co=256
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-latex
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin on  " vim-latex plugin settings below 
+let g:tex_flavor='pdflatex'
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_CompileRule_pdf='pdflatex -interaction=nonstopmode $*'  
+let g:Tex_ViewRule_pdf='evince' 
+let g:Tex_FoldedEnvironments='tikzpicture, column, verbatim,comment,eq,gather,align,figure,table,thebibliography,keywords,abstract,titlepage,solution,proof,algorithm'
+let g:Tex_MultipleCompileFormats='pdf, aux'
+"disable vim-latex shortcuts
+let g:Imap_FreezeImap=1
+
+if has("autocmd")
+" Restore cursor position
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+
+" Filetypes (au = autocmd)
+au FileType helpfile set nonumber      " no line numbers when viewing help
+au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
+au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
+
+" When using mutt, text width=72
+au FileType txt  set textwidth=80
+au FileType tex  set spell
+au FileType mail set textwidth=72
+au FileType cpp,c,C,java,sh,pl,php,asp,tcl,py  set autoindent
+au FileType cpp,c,C,java,sh,pl,php,asp,tcl,py  set list 
+au FileType cpp,c,C,java,sh,pl,php,asp,tcl,py  set listchars=tab:>-
+au FileType cpp,c,C,java,sh,pl,php,asp,tcl,py  set smartindent
+au FileType cpp,c,C,java,sh,pl,php,asp,tcl  set cindent
+au FileType java  set complete=.,w,b,u,t,i
+au FileType cpp,c,C,qel,tcl  set foldmethod=indent 
+au FileType java,py,python  set foldmethod=indent 
+
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd BufRead *.py set nocindent
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+au FileType py set tabstop=4 
+au FileType py set shiftwidth=4 
+au FileType py set smarttab 
+au FileType py set expandtab 
+au FileType py set softtabstop=4 
+au FileType py set autoindent   
+au FileType py set foldmethod=indent    
+"au BufRead mutt*[0-9] set tw=72
+
+" Automatically chmod +x Shell and Perl scripts and python 
+au BufWritePost   *.sh             !chmod +x %
+au BufWritePost   *.pl             !chmod +x %
+"au BufWritePost  *.py   !chmod +x %
+
+" File formats
+au BufNewFile,BufRead  *.pls    set syntax=dosini
+au BufNewFile,BufRead  modprobe.conf    set syntax=modconf
+endif
+
+" Automatically change the working path to the path of the current file
+" autocmd BufNewFile,BufEnter * silent! lcd %:p:h
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"mapping
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <F6> <Esc>:setlocal spell spelllang=en_gb<CR>
+map <F7> <Esc>:setlocal nospell<CR> 
+nmap <silent> <C-Up> :wincmd k<CR>
+nmap <silent> <C-Down> :wincmd j<CR>
+nmap <silent> <C-Left> :wincmd h<CR>
+nmap <silent> <C-Right> :wincmd l<CR>
+" move splits when using mac
+nmap ˙ <C-w><Left>
+nmap ¬ <C-w><Right>
+nmap ˚ <C-w><Up>
+nmap ∆ <C-w><Down> 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ctags.vim setting - to show function name in status bar
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ctags_path = '/usr/bin/ctags'
+let g:ctags_statusline = 1
+let generate_ctags = 1
+let g:ctags_regenerate = 0 " disable regeneration
+nmap <F2> :CTAGS<CR>
+nmap ,t :!(cd %:p:h;ctags *.[cCh])&
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nerdTree
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif 
+"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif 
+"map <C-n> :NERDTreeToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" tagbar
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:tabgar_ctags_bin = '/path/to/ctags/v5.8/bin' 
+nmap <F9> :TagbarToggle<CR>
+" Auto open Tagbar when editing Java files
+  " autocmd FileType java call SetJavaOptions()
+function! SetJavaOptions()
+  :call tagbar#autoopen(0)
+   let java_highlight_functions = 1
+   let java_highlight_all = 1
+   endfunction
+   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+   """""""""""""""""""" YouCompleteMe """"""""""""""""""""""""""""""""
+   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+   "nnoremap <leader>j :YcmCompleter GoTo<CR>
+   "nnoremap <leader>t :YcmCompleter GetType<CR>
+   "let g:ycm_register_as_syntastic_checker = 1 "default 1
+   "let g:Show_diagnostics_ui = 1 "default 1
+   ""will put icons in Vim's gutter on lines that have a diagnostic set.
+   """Turning this off will also turn off the YcmErrorLine and YcmWarningLine
+   ""highlighting
+   "let g:ycm_enable_diagnostic_signs = 1
+   ""let g:ycm_enable_diagnostic_highlighting = 0
+   ""let g:ycm_always_populate_location_list = 1 "default 0
+   "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'  "where to search for .ycm_extra_conf.py if not found
+   "let g:ycm_confirm_extra_conf = 0 
+   "let g:ycm_goto_buffer_command = 'same-buffer' "[ 'same-buffer', 'horizontal-split', 'vertical-split', 'new-tab' ]
+   "let g:ycm_disable_for_files_larger_than_kb = 0 "default 1000
+   "map <F9> :YcmCompleter FixIt<CR>
+   ""let g:ycm_filetype_whitelist = { '*': 1 }
+   ""let g:ycm_key_invoke_completion = '<C-Space>'
+   ""let g:ycm_use_clangd = "Always"
+   ""let g:ycm_max_diagnostics_to_display = 0
+   ""let g:ycm_always_populate_location_list = 1
+   """""""""""""""""""""""""""""""""""""""""""""""""""
+
+   "prevent closing last window 
+   "cabbrev q <c-r>=(getcmdtype()==':' && getcmdpos()<=2 ? 'close' : 'q')<CR>
+   "cabbrev wq <c-r>=(getcmdtype()==':' && getcmdpos()<=2 ? 'write' : 'wq')<CR>
+
+   "scratch window
+   let g:scratch_show_command = 'topleft 10split | hide buffer'
+
+
+   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+   "buffers
+   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+   nnoremap <F5> :buffers<CR>:buffer<Space>
+
+   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+   "FastFold
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap zuz <Plug>(FastFoldUpdate)
+  let g:fastfold_savehook = 1
+  let g:fastfold_fold_command_suffixes = ['x', 'X', 'a', 'A', 'o', 'O', 'c', 'C']
+  let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  "Cursor line highlighting mapping 
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  :hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+  :hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+  :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  " netrw // default plugin instead of nerdtree
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  let g:netrw_banner = 0
+  let g:netrw_liststyle = 3
+  let g:netrw_browse_split = 4
+  let g:netrw_altv = 1
+  let g:netrw_winsize = 25
+  "augroup ProjectDrawer
+  "  autocmd!
+  "  autocmd VimEnter * :Vexplore
+  "augroup END
+  let g:NetrwIsOpen=0
+
+function! ToggleNetrw()
+  if g:NetrwIsOpen
+  let i = bufnr("$")
+while (i >= 1)
+  if (getbufvar(i, "&filetype") == "netrw")
+  silent exe "bwipeout " . i 
+  endif
+  let i-=1
+  endwhile
+  let g:NetrwIsOpen=0
+  else
+  let g:NetrwIsOpen=1
+  silent Lexplore
+  endif
+  endfunction
+
+  noremap <silent> <C-n> :call ToggleNetrw()<CR>
